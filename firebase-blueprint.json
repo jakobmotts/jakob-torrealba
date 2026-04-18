@@ -1,0 +1,92 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user settings, goals, and current workout split state.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "trainingBlock": { "type": "string", "enum": ["strength", "growth"], "description": "Current training block type" },
+        "currentSplitIndex": { "type": "number", "description": "Index of the current day in the 7-day split" },
+        "targetCalories": { "type": "number" },
+        "targetProtein": { "type": "number" },
+        "targetCarbs": { "type": "number" },
+        "targetFats": { "type": "number" },
+        "pushNotificationsEnabled": { "type": "boolean" },
+        "scheduleTemplate": { "type": "array" },
+        "goals": { "type": "array" },
+        "macroOffsets": { "type": "object" },
+        "currentGoal": { "type": "string", "enum": ["cut", "maintain", "bulk"] },
+        "targetWeight": { "type": "number" },
+        "targetWeightDate": { "type": "string", "format": "date" },
+        "trainingMealPlan": { "type": "array" },
+        "restMealPlan": { "type": "array" },
+        "workoutSplit": { "type": "array" }
+      },
+      "required": ["uid", "trainingBlock", "currentSplitIndex"]
+    },
+    "DailyLog": {
+      "title": "Daily Log",
+      "description": "Logs daily metrics like weight, macros, and work KPIs.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "date": { "type": "string", "format": "date", "description": "YYYY-MM-DD" },
+        "weight": { "type": "number" },
+        "caloriesConsumed": { "type": "number" },
+        "proteinConsumed": { "type": "number" },
+        "carbsConsumed": { "type": "number" },
+        "fatsConsumed": { "type": "number" },
+        "checkInPhotos": { "type": "array" },
+        "notes": { "type": "string" },
+        "tasks": { "type": "object" },
+        "dailyKpis": { "type": "object" },
+        "completedBlocks": { "type": "object" }
+      },
+      "required": ["uid", "date"]
+    },
+    "WorkoutLog": {
+      "title": "Workout Log",
+      "description": "Logs completed workouts.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "splitName": { "type": "string" },
+        "loggedExercises": { "type": "object" }
+      },
+      "required": ["uid", "date", "splitName"]
+    },
+    "FutureEvent": {
+      "title": "Future Event",
+      "description": "Planned future events on the calendar.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "id": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "title": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["uid", "date", "title"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles"
+    },
+    "/dailyLogs/{logId}": {
+      "schema": { "$ref": "#/entities/DailyLog" },
+      "description": "Daily tracking logs"
+    },
+    "/workoutLogs/{logId}": {
+      "schema": { "$ref": "#/entities/WorkoutLog" },
+      "description": "Workout history"
+    },
+    "/futureEvents/{eventId}": {
+      "schema": { "$ref": "#/entities/FutureEvent" },
+      "description": "Planned future events"
+    }
+  }
+}

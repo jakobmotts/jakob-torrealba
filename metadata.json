@@ -1,0 +1,6 @@
+{
+  "name": "LifeOS Tracker",
+  "description": "A comprehensive daily schedule app tracking meals, gym progress, work KPIs, and personal goals with historical logging.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": []
+}
